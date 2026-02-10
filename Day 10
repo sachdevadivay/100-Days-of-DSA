@@ -1,0 +1,62 @@
+# Problem: Read a string and check if it is a palindrome using two-pointer comparison.
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[100];
+    int left, right;
+
+  
+    scanf("%s", s);
+
+    left = 0;
+    right = strlen(s) - 1;
+
+    while (left < right) {
+        if (s[left] != s[right]) {
+            printf("NO");
+            return 0;
+        }
+        left++;
+        right--;
+    }
+
+    printf("YES");
+    return 0;
+}
+
+# Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.
+
+#include <stdlib.h>
+
+int compare(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int* intersect(int* nums1, int nums1Size, int* nums2, int nums2Size, int* returnSize) {
+    
+
+    qsort(nums1, nums1Size, sizeof(int), compare);
+    qsort(nums2, nums2Size, sizeof(int), compare);
+
+    int* result = (int*)malloc(sizeof(int) * (nums1Size < nums2Size ? nums1Size : nums2Size));
+    
+    int i = 0, j = 0, k = 0;
+
+  
+    while (i < nums1Size && j < nums2Size) {
+        if (nums1[i] == nums2[j]) {
+            result[k++] = nums1[i];
+            i++;
+            j++;
+        } else if (nums1[i] < nums2[j]) {
+            i++;
+        } else {
+            j++;
+        }
+    }
+
+    *returnSize = k;
+    return result;
+}
